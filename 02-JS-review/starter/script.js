@@ -143,12 +143,13 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
+/* 
 // Destructuring
-
+const books = getBooks();
 const book = getBook(1);
 book;
 
-const { title, author, genres, reviews } = book;
+const { title, author, genres, reviews, pages } = book;
 
 console.log(title);
 console.log(author);
@@ -158,6 +159,98 @@ console.log(reviews);
 // const primaryGenre = genres[0];
 // const secondaryGenre = genres[1];
 
-const [primaryGenre, secondaryGenre] = genres;
+const [primaryGenre, ...otherGenres] = genres;
 console.log(primaryGenre);
-console.log(secondaryGenre);
+console.log(otherGenres);
+
+const newGenres = [...genres, 'new genre', 'another new genre'];
+console.log(newGenres);
+
+const updatedBook = {
+  ...book,
+  moviePublicationDate: '2001-12-19',
+  pages: 1216 + 1,
+};
+updatedBook;
+
+const summary = `${title} is a ${primaryGenre} book written by ${author}. It has received ${reviews.goodreads.ratingsCount} ratings on Goodreads.`;
+summary;
+
+const pagesRange =
+  pages > 1000 ? 'This is a long book.' : 'This is a short book.';
+pagesRange;
+
+const pagesAllBooks = books.reduce((acc, { pages }) => {
+  return acc + pages;
+}, 0);
+pagesAllBooks;
+
+const x = [1, 2, 5, 4, 3];
+const sorted = [...x].sort((a, b) => a - b);
+console.log(sorted);
+console.log(x);
+
+const sortedByPages = [...books].sort((a, b) => a.pages - b.pages);
+console.log(sortedByPages);
+
+// 1) Add a new book to the data array
+const newBook = {
+  id: 6,
+  title: 'Neuromancer',
+  publicationDate: '1984-07-01',
+  author: 'William Gibson',
+  genres: ['science fiction', 'cyberpunk'],
+  hasMovieAdaptation: true,
+  pages: 271,
+  translations: {
+    spanish: 'Neuromante',
+    french: 'Neuromancien',
+  },
+  reviews: {
+    goodreads: {
+      rating: 4.12,
+      ratingsCount: 500000,
+      reviewsCount: 10000,
+    },
+  },
+};
+
+const booksAfterAddingNewBook = [...books, newBook];
+console.log(booksAfterAddingNewBook);
+
+// 2) Remove a book with id 2 from the data array
+const booksAfterRemovingBook = booksAfterAddingNewBook.filter(
+  (book) => book.id !== 2
+);
+console.log(booksAfterRemovingBook);
+
+// 3) Update the title of the book with id 1
+const bookToUpdate = booksAfterRemovingBook.find((book) =>
+  book.id === 1 ? { ...book, title: 'Updated Title' } : book
+);
+console.log(bookToUpdate);
+ */
+
+// Promises and Fetch API
+// Example of using Promise with fetch
+fetch(`https://jsonplaceholder.typicode.com/todos`)
+  .then((res) => res.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error('Error fetching data:', error));
+
+// Example of using async/await
+async function fetchTodos() {
+  try {
+    const response = await fetch(`https://jsonplaceholder.typicode.com/todos`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const todos = await response.json();
+    console.log(todos);
+  } catch (error) {
+    console.error('Error fetching todos:', error);
+  } finally {
+    console.log('Fetch attempt completed.');
+  }
+}
+fetchTodos();
